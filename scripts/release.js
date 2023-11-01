@@ -21,6 +21,10 @@ for (const dir of fs.readdirSync(packagesDir)) {
   packageDirs.push(absDir);
 }
 
+console.log(
+  "\n\n\n--------------------------------------------------------------------------------\n\n\n",
+);
+
 for (const dir of packageDirs) {
   console.log(`Publishing ${dir}`);
   sh(`cd ${dir} && npm publish ${dryRun ? "--dry-run" : ""}`);
