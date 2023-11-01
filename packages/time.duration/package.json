@@ -1,0 +1,22 @@
+{
+  "name": "@wjminis/time.duration",
+  "version": "0.1.0",
+  "type": "module",
+  "license": "GPL-3.0",
+  "description": "",
+  "keywords": [],
+  "scripts": {
+    "build": "tsc",
+    "lint": "prettier --check \"src/**/*.ts\""
+  },
+  "exports": {
+    ".": {
+      "default": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "devDependencies": {
+    "prettier": "latest",
+    "typescript": "latest"
+  }
+}
