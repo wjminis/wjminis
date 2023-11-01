@@ -8,6 +8,8 @@ const readline = rl.createInterface({
   output: process.stdout,
 });
 
+const doGit = !process.argv.includes("--no-git");
+
 readline.question("Package: @wjminis/", (target) => {
   const __dirname = path.dirname(new URL(import.meta.url).pathname);
   const cwd = path.join(__dirname, "..");
@@ -50,6 +52,11 @@ readline.question("Package: @wjminis/", (target) => {
   writeAll(immutables, target, targetPath);
 
   child.execSync("pnpm install", { cwd, stdio: "inherit" });
+  if (doGit) {
+    child.execSync(`git add ${targetPath}`, { cwd, stdio: "inherit" });
+    child.execSync(`git add ${path.join(cwd, "pnpm-lock.yaml")}`, { cwd, stdio: "inherit" });
+    child.execSync(`git commit -m ":tada: Create @wjminis/${target}"`, { cwd, stdio: "inherit" });
+  }
 
   readline.close();
 });
