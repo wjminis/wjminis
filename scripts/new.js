@@ -9,10 +9,10 @@ const readline = rl.createInterface({
 });
 
 const doGit = !process.argv.includes("--no-git");
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
+const cwd = path.join(__dirname, "..");
 
 readline.question("Package: @wjminis/", (target) => {
-  const __dirname = path.dirname(new URL(import.meta.url).pathname);
-  const cwd = path.join(__dirname, "..");
   const targetPath = path.join(cwd, "packages", target);
 
   if (path.dirname(targetPath) !== path.join(cwd, "packages")) {
@@ -31,7 +31,16 @@ readline.question("Package: @wjminis/", (target) => {
         .join(""),
     );
     readline.question("Would you like to rewrite immutable files? [y/N] ", (answer) => {
-      if (answer.toLowerCase() === "y") writeAll(immutables, target, targetPath);
+      if (answer.toLowerCase() === "y") {
+        writeAll(immutables, target, targetPath);
+        if (doGit) {
+          for (const file in immutables) sh(`git add ${path.join(targetPath, file)}`);
+          sh(
+            `git diff-index --quiet HEAD || ` +
+              `git commit -m ":sparkles: Rewrite @wjminis/${target} immutables"`,
+          );
+        }
+      }
       readline.close();
     });
     return;
@@ -51,11 +60,11 @@ readline.question("Package: @wjminis/", (target) => {
   writeAll(mutables, target, targetPath);
   writeAll(immutables, target, targetPath);
 
-  child.execSync("pnpm install", { cwd, stdio: "inherit" });
+  sh("pnpm install");
   if (doGit) {
-    child.execSync(`git add ${targetPath}`, { cwd, stdio: "inherit" });
-    child.execSync(`git add ${path.join(cwd, "pnpm-lock.yaml")}`, { cwd, stdio: "inherit" });
-    child.execSync(`git commit -m ":tada: Create @wjminis/${target}"`, { cwd, stdio: "inherit" });
+    sh(`git add ${targetPath}`);
+    sh(`git add ${path.join(cwd, "pnpm-lock.yaml")}`);
+    sh(`git commit -m ":tada: Create @wjminis/${target}"`);
   }
 
   readline.close();
@@ -68,6 +77,13 @@ readline.question("Package: @wjminis/", (target) => {
  */
 function writeAll(map, target, targetPath) {
   for (const file in map) fs.writeFileSync(path.join(targetPath, file), map[file](target), "utf-8");
+}
+
+/**
+ * @param {string} cmd
+ */
+function sh(cmd) {
+  child.execSync(cmd, { cwd, stdio: "inherit" });
 }
 
 /**@type {Record<string, (target: string) => string>}*/
