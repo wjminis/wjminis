@@ -115,7 +115,6 @@ const immutables = {
         arrowParens: "always",
         bracketSameLine: false,
         bracketSpacing: true,
-        editorconfig: false,
         embeddedLanguageFormatting: "auto",
         endOfLine: "lf",
         htmlWhitespaceSensitivity: "css",

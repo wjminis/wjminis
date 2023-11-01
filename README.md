@@ -10,4 +10,3 @@ packages.
 - Comprehensive documentation
 - [New minis at your request](https://github.com/wjminis/wjminis/issues/new/choose)
 - Free and Open Source under the [GPL-3.0 License](./LICENSE)
-
