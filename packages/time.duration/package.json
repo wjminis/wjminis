@@ -1,10 +1,18 @@
 {
   "name": "@wjminis/time.duration",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "license": "GPL-3.0",
-  "description": "",
-  "keywords": [],
+  "description": "A micro-DSL for time durations in JavaScript.",
+  "keywords": [
+    "wjminis",
+    "time.duration",
+    "time",
+    "duration",
+    "dsl",
+    "micro",
+    "library"
+  ],
   "scripts": {
     "build": "tsc",
     "lint": "prettier --check \"src/**/*.ts\""
@@ -18,5 +26,14 @@
   "devDependencies": {
     "prettier": "latest",
     "typescript": "latest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wjminis/wjminis.git"
+  },
+  "homepage": "https://github.com/wjminis/wjminis",
+  "bugs": {
+    "url": "https://github.com/wjminis/wjminis/issues",
+    "email": "willster+wjminis@willsterjohnson.com"
   }
 }

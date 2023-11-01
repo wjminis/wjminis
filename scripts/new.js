@@ -208,7 +208,7 @@ const mutables = {
         type: "module",
         license: "GPL-3.0",
         description: "",
-        keywords: [],
+        keywords: ["wjminis", target, ...(target.includes(".") ? target.split(".") : [])],
         scripts: {
           build: "tsc",
           lint: 'prettier --check "src/**/*.ts"',
@@ -222,6 +222,15 @@ const mutables = {
         devDependencies: {
           prettier: "latest",
           typescript: "latest",
+        },
+        repository: {
+          type: "git",
+          url: "https://github.com/wjminis/wjminis.git",
+        },
+        homepage: "https://github.com/wjminis/wjminis",
+        bugs: {
+          url: "https://github.com/wjminis/wjminis/issues",
+          email: "willster+wjminis@willsterjohnson.com",
         },
       },
       null,

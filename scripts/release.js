@@ -27,5 +27,5 @@ console.log(
 
 for (const dir of packageDirs) {
   console.log(`Publishing ${dir}`);
-  sh(`cd ${dir} && npm publish ${dryRun ? "--dry-run" : ""}`);
+  sh(`cd ${dir} && npm publish --access public ${dryRun ? "--dry-run" : ""}`);
 }
