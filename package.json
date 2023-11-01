@@ -5,7 +5,8 @@
   "scripts": {
     "build": "turbo run build",
     "lint": "turbo run lint",
-    "new": "node ./scripts/new.js"
+    "new": "node ./scripts/new.js",
+    "release": "node scripts/release.js"
   },
   "devDependencies": {
     "prettier": "latest",

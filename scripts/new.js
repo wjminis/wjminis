@@ -1,7 +1,7 @@
 import rl from "node:readline";
 import fs from "node:fs";
 import path from "node:path";
-import child from "node:child_process";
+import { cwd, sh } from "./sh.js";
 
 const readline = rl.createInterface({
   input: process.stdin,
@@ -9,8 +9,6 @@ const readline = rl.createInterface({
 });
 
 const doGit = !process.argv.includes("--no-git");
-const __dirname = path.dirname(new URL(import.meta.url).pathname);
-const cwd = path.join(__dirname, "..");
 
 readline.question("Package: @wjminis/", (target) => {
   const targetPath = path.join(cwd, "packages", target);
@@ -80,15 +78,17 @@ function writeAll(map, target, targetPath) {
 }
 
 /**
- * @param {string} cmd
+ * @param {string} alt
+ * @param {string} endpoint
+ * @param {string} logo
  */
-function sh(cmd) {
-  child.execSync(cmd, { cwd, stdio: "inherit" });
+function shield(alt, endpoint, logo) {
+  return `![${alt}](https://img.shields.io/${endpoint}?style=for-the-badge&color=993399&label=&logo=${logo})`;
 }
 
 /**@type {Record<string, (target: string) => string>}*/
 const immutables = {
-  "tsconfig.json": (target) =>
+  "tsconfig.json": () =>
     JSON.stringify(
       {
         compilerOptions: {
@@ -109,7 +109,7 @@ const immutables = {
       null,
       2,
     ) + "\n",
-  ".prettierrc": (target) =>
+  ".prettierrc": () =>
     JSON.stringify(
       {
         arrowParens: "always",
@@ -134,7 +134,7 @@ const immutables = {
       null,
       2,
     ) + "\n",
-  ".gitignore": (target) =>
+  ".gitignore": () =>
     [
       "node_modules",
       ".DS_Store",
@@ -149,6 +149,7 @@ const immutables = {
       ".env.test.local",
       ".env.production.local",
       ".turbo",
+      "!.npmignore",
       "",
     ].join("\n"),
   LICENSE: (target) =>
@@ -170,6 +171,7 @@ const immutables = {
       "    along with this program.  If not, see <https://www.gnu.org/licenses/>.",
       "",
     ].join("\n"),
+  ".npmignore": () => ["**/*", "!dist/**/*", ""].join("\n"),
 };
 
 /**@type {Record<string, (target: string) => string>}*/
@@ -178,6 +180,11 @@ const mutables = {
     [
       `# @wjminis/${target}`,
       "",
+      [["NPM Version", `npm/v/@wjminis/${target}`, "npm"]].map(([alt, endpoint, logo]) =>
+        shield(alt, endpoint, logo),
+      ),
+      "",
+      ,
       "## Install",
       "",
       "```sh",
