@@ -1,0 +1,15 @@
+{
+  "name": "@wjminis/wjminis",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "new": "node ./scripts/new.js"
+  },
+  "devDependencies": {
+    "prettier": "latest",
+    "turbo": "latest"
+  },
+  "packageManager": "pnpm@8.6.10"
+}
