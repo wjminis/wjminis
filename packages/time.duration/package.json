@@ -1,6 +1,6 @@
 {
   "name": "@wjminis/time.duration",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "type": "module",
   "license": "GPL-3.0",
   "description": "A micro-DSL for time durations in JavaScript.",

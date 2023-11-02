@@ -31,6 +31,32 @@ Security:
 
 N/A
 
+## 1.0.4 - 2023-11-02
+
+Added:
+
+N/A
+
+Changed:
+
+- readme badge
+
+Deprecated:
+
+N/A
+
+Removed:
+
+N/A
+
+Fixed:
+
+N/A
+
+Security:
+
+N/A
+
 ## 1.0.3 - 2023-11-02
 
 Added:

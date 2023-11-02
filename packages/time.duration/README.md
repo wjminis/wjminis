@@ -1,6 +1,6 @@
 # @wjminis/time.duration
 
-![NPM Version](https://img.shields.io/npm/v/%40wjminis/time.duration?style=for-the-badge&color=993399&label=&logo=npm)
+![NPM Version](https://img.shields.io/npm/v/%40wjminis/time.duration?color=444&label=&logo=npm)
 
 
 A micro-DSL for time durations in JavaScript.
