@@ -1,6 +1,6 @@
 {
   "name": "@wjminis/time.duration",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "type": "module",
   "license": "GPL-3.0",
   "description": "A micro-DSL for time durations in JavaScript.",
@@ -18,10 +18,7 @@
     "lint": "prettier --check \"src/**/*.ts\""
   },
   "exports": {
-    ".": {
-      "default": "./dist/index.js",
-      "types": "./dist/index.d.ts"
-    }
+    ".": "./dist/index.js"
   },
   "devDependencies": {
     "prettier": "latest",
