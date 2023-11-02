@@ -175,7 +175,7 @@ const immutables = {
       "    along with this program.  If not, see <https://www.gnu.org/licenses/>.",
       "",
     ].join("\n"),
-  ".npmignore": () => ["**/*", "!dist/**/*", ""].join("\n"),
+  ".npmignore": () => ["**/*", "!dist/**/*", "!CHANGELOG.md", ""].join("\n"),
 };
 
 /**@type {Record<string, (target: string) => string>}*/
