@@ -15,11 +15,11 @@ packages.
 
 Packages are called "Minis" here for (hopefully) obvious reasons.
 
-| Name              | Version            | Kind    | Description                                                 |
-| ----------------- | ------------------ | ------- | ----------------------------------------------------------- |
-| **time**          |                    |         |                                                             |
+| Name            | Version            | Kind    | Description                                                 |
+| --------------- | ------------------ | ------- | ----------------------------------------------------------- |
+| **time**        |                    |         |                                                             |
 | [time.duration] | ![time.duration v] | Utility | A micro-DSL for time durations in JavaScript.               |
-| **wjminis**       |                    |         | **Meta packages**                                           |
+| **wjminis**     |                    |         | **Meta packages**                                           |
 | wjminis.manager | (unreleased)       | DevTool | Beautiful CLI & Web interface for installing/removing Minis |
 
 [time.duration]: ./packages/time.duration/README.md
