@@ -18,9 +18,9 @@ Packages are called "Minis" here for (hopefully) obvious reasons.
 | Name              | Version            | Kind    | Description                                                 |
 | ----------------- | ------------------ | ------- | ----------------------------------------------------------- |
 | **time**          |                    |         |                                                             |
-| - [time.duration] | ![time.duration v] | Utility | A micro-DSL for time durations in JavaScript.               |
+| [time.duration] | ![time.duration v] | Utility | A micro-DSL for time durations in JavaScript.               |
 | **wjminis**       |                    |         | **Meta packages**                                           |
-| - wjminis.manager | (unreleased)       | DevTool | Beautiful CLI & Web interface for installing/removing Minis |
+| wjminis.manager | (unreleased)       | DevTool | Beautiful CLI & Web interface for installing/removing Minis |
 
 [time.duration]: ./packages/time.duration/README.md
 [time.duration v]: https://img.shields.io/npm/v/%40wjminis/time.duration?color=444&label=&logo=npm
