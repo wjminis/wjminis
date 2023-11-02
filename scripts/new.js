@@ -87,7 +87,7 @@ function writeAll(map, target, targetPath) {
  * @param {string} logo
  */
 function shield(alt, endpoint, logo) {
-  return `![${alt}](https://img.shields.io/${endpoint}?style=for-the-badge&color=993399&label=&logo=${logo})`;
+  return `![${alt}](https://img.shields.io/${endpoint}?color=444&label=&logo=${logo})`;
 }
 
 /**@type {Record<string, (target: string) => string>}*/
