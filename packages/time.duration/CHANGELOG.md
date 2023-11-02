@@ -31,6 +31,32 @@ Security:
 
 N/A
 
+## 1.0.3 - 2023-11-02
+
+Added:
+
+- this file to NPM listing
+
+Changed:
+
+N/A
+
+Deprecated:
+
+N/A
+
+Removed:
+
+N/A
+
+Fixed:
+
+N/A
+
+Security:
+
+N/A
+
 ## 1.0.2 - 2023-11-02
 
 Added:
