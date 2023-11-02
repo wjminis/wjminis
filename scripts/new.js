@@ -1,14 +1,19 @@
-import rl from "node:readline";
 import fs from "node:fs";
 import path from "node:path";
-import { cwd, sh } from "./sh.js";
+import rl from "node:readline";
+import { changelogHead, cwd, sh } from "./funcs.js";
 
 const readline = rl.createInterface({
   input: process.stdin,
   output: process.stdout,
 });
 
-const doGit = !process.argv.includes("--no-git");
+function commit(cb) {
+  readline.question("Press Ctrl+C to NOT commit, otherwise press Enter to commit ", () => {
+    cb();
+    readline.close();
+  });
+}
 
 readline.question("Package: @wjminis/", (target) => {
   const targetPath = path.join(cwd, "packages", target);
@@ -31,19 +36,19 @@ readline.question("Package: @wjminis/", (target) => {
     readline.question("Would you like to rewrite immutable files? [y/N] ", (answer) => {
       if (answer.toLowerCase() === "y") {
         writeAll(immutables, target, targetPath);
-        if (doGit) {
+        commit(() => {
           for (const file in immutables) sh(`git add ${path.join(targetPath, file)}`);
           sh(
             `git diff-index --quiet HEAD || ` +
               `git commit -m ":sparkles: Rewrite @wjminis/${target} immutables"`,
           );
-        }
+        });
       }
-      readline.close();
     });
     return;
   }
 
+  // a letter, any combination of letters and hyphens. Repeat 1 or more times, separated by dots (period/full-stop)
   if (!/^[a-z]+(-[a-z]+)*(\.[a-z]+(-[a-z]+)*)*$/.test(target)) {
     console.log(
       "Error: invalid target name - must be all lowercase latin characters and hyphens, " +
@@ -59,13 +64,12 @@ readline.question("Package: @wjminis/", (target) => {
   writeAll(immutables, target, targetPath);
 
   sh("pnpm install");
-  if (doGit) {
+
+  commit(() => {
     sh(`git add ${targetPath}`);
     sh(`git add ${path.join(cwd, "pnpm-lock.yaml")}`);
-    sh(`git commit -m ":tada: Create @wjminis/${target}"`);
-  }
-
-  readline.close();
+    sh(`git diff-index --quiet HEAD || git commit -m ":tada: Create @wjminis/${target}"`);
+  });
 });
 
 /**
@@ -214,10 +218,7 @@ const mutables = {
           lint: 'prettier --check "src/**/*.ts"',
         },
         exports: {
-          ".": {
-            default: "./dist/index.js",
-            types: "./dist/index.d.ts",
-          },
+          ".": "./dist/index.js",
         },
         devDependencies: {
           prettier: "latest",
@@ -236,4 +237,5 @@ const mutables = {
       null,
       2,
     ) + "\n",
+  "CHANGELOG.md": changelogHead,
 };

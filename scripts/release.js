@@ -1,31 +1,52 @@
 import fs from "node:fs";
 import path from "node:path";
-import { cwd, sh } from "./sh.js";
+import { changelogHead, cwd, sh } from "./funcs.js";
+
+function updateChangelog(dir, target, version) {
+  const changelogPath = path.join(dir, "CHANGELOG.md");
+  const changelog = fs.readFileSync(changelogPath, "utf-8");
+
+  const relevant = changelog.split("## Unreleased\n")[1];
+
+  const newChangelog = [
+    changelogHead(target),
+    `## ${version} - ${new Date().toISOString().split("T")[0]}`,
+    relevant,
+  ].join("\n");
+
+  fs.writeFileSync(changelogPath, newChangelog);
+
+  if (dryRun) return;
+
+  sh(`git add ${dir}`);
+  sh(`git diff-index --quiet HEAD || git commit -m ":bookmark: ${target}@${version}"`);
+}
+
+const FAIL = "fail";
 
 const dryRun = process.argv.includes("--dry-run");
 
 const packagesDir = path.join(cwd, "packages");
 
-const packageDirs = [];
+const green = (str) => `\x1b[32m${str}\x1b[0m`;
+const yellow = (str) => `\x1b[33m${str}\x1b[0m`;
 
-for (const dir of fs.readdirSync(packagesDir)) {
-  const absDir = path.join(packagesDir, dir);
-  if (!fs.statSync(absDir).isDirectory()) continue;
-  const packageJsonPath = path.join(absDir, "package.json");
+for (const target of fs.readdirSync(packagesDir)) {
+  const dir = path.join(packagesDir, target);
+  if (!fs.statSync(dir).isDirectory()) continue;
+  const packageJsonPath = path.join(dir, "package.json");
   const packageJsonData = JSON.parse(fs.readFileSync(packageJsonPath, "utf-8"));
   const packageName = packageJsonData.name;
+  /**@type {string}*/
   const packageVersion = packageJsonData.version;
 
-  const versionNpm = sh(`npm view ${packageName} version || echo "no-version"`);
-  if (versionNpm !== "no-version\n" && versionNpm === packageVersion) continue;
-  packageDirs.push(absDir);
-}
+  const versionNpm = sh(`npm view ${packageName} version || echo "${FAIL}"`);
+  if (versionNpm !== FAIL && versionNpm === packageVersion) {
+    console.log(yellow(`~ ${packageName}@^${packageVersion}`));
+    continue;
+  }
 
-console.log(
-  "\n\n\n--------------------------------------------------------------------------------\n\n\n",
-);
-
-for (const dir of packageDirs) {
-  console.log(`Publishing ${dir}`);
-  sh(`cd ${dir} && npm publish --access public ${dryRun ? "--dry-run" : ""}`);
+  updateChangelog(dir, target, packageVersion);
+  const publishOutput = sh(`cd ${dir} && npm publish --access public ${dryRun ? "--dry-run" : ""}`);
+  console.log(green(publishOutput), dryRun ? "(dry run)" : "");
 }
