@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import { changelogHead, cwd, sh } from "./funcs.js";
+import { changelogHead, clear, cwd, dim, green, sh, yellow } from "./funcs.js";
 
 function updateChangelog(dir, target, version) {
   const changelogPath = path.join(dir, "CHANGELOG.md");
@@ -10,6 +10,7 @@ function updateChangelog(dir, target, version) {
 
   const newChangelog = [
     changelogHead(target),
+    "",
     `## ${version} - ${new Date().toISOString().split("T")[0]}`,
     relevant,
   ].join("\n");
@@ -28,9 +29,6 @@ const dryRun = process.argv.includes("--dry-run");
 
 const packagesDir = path.join(cwd, "packages");
 
-const green = (str) => `\x1b[32m${str}\x1b[0m`;
-const yellow = (str) => `\x1b[33m${str}\x1b[0m`;
-
 for (const target of fs.readdirSync(packagesDir)) {
   const dir = path.join(packagesDir, target);
   if (!fs.statSync(dir).isDirectory()) continue;
@@ -42,11 +40,11 @@ for (const target of fs.readdirSync(packagesDir)) {
 
   const versionNpm = sh(`npm view ${packageName} version || echo "${FAIL}"`);
   if (versionNpm !== FAIL && versionNpm === packageVersion) {
-    console.log(yellow(`~ ${packageName}@^${packageVersion}`));
+    console.log(yellow(`~ ${packageName}@^${packageVersion}`), clear);
     continue;
   }
 
   updateChangelog(dir, target, packageVersion);
   const publishOutput = sh(`cd ${dir} && npm publish --access public ${dryRun ? "--dry-run" : ""}`);
-  console.log(green(publishOutput), dryRun ? "(dry run)" : "");
+  console.log(green(publishOutput), clear, dryRun ? dim("(dry run)") : "", clear);
 }

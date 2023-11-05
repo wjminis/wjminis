@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+
+__BUILDSPACE__=$(pwd) pnpm -C $SCRIPT_DIR "_$1"
