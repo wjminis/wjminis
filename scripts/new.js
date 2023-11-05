@@ -13,7 +13,7 @@ async function commit(targets, message) {
   const answer = await input(`Commit the new & changed files? ${dim("[y/N]")}${clear} `);
   if (answer.toLowerCase() === "y") {
     sh("git reset");
-    for (const file in targets) sh(`git add ${file}`);
+    for (const file of targets) sh(`git add ${file}`);
     sh(`git diff-index --quiet HEAD || git commit -m "${message}"`);
   }
 }
