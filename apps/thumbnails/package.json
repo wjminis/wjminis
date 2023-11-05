@@ -1,0 +1,20 @@
+{
+  "name": "dev.wjutils.thumbnails",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "prepare": "svelte-kit sync",
+    "dev": "../__BUILDSPACE__/run-script dev",
+    "build": "../__BUILDSPACE__/run-script build",
+    "preview": "../__BUILDSPACE__/run-script preview",
+    "lint": "prettier --plugin-search-dir . --check \"{assets,hooks,lib,routes}/**/*.{js,ts,svelte,json,css,html}\" \"{index,error}.html\" \"app.d.ts\""
+  },
+  "devDependencies": {
+    "@sveltejs/kit": "^1.20.4",
+    "prettier": "^2.8.0",
+    "prettier-plugin-svelte": "^2.10.1",
+    "svelte": "^4.0.5",
+    "tslib": "^2.4.1",
+    "typescript": "^5.0.0"
+  }
+}

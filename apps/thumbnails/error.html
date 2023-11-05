@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link
+      rel="icon"
+      href="%sveltekit.assets%/favicon.png"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
+    <title>%sveltekit.status% | WJMinis</title>
+  </head>
+  <body data-sveltekit-preload-data="hover">
+    <span
+      style="display: none"
+      id="data-status"
+      >%sveltekit.status%</span
+    >
+    <span
+      style="display: none"
+      id="data-message"
+      >%sveltekit.error.message%</span
+    >
+    <h1>%sveltekit.status% %sveltekit.error.message%</h1>
+    <p>Something went wrong! Here's how to get back to what you were doing:</p>
+    <ol>
+      <li>
+        <details>
+          <summary>Try refreshing the page</summary>
+          <p>This could be a one-time thing, refreshing the page could fix everything.</p>
+        </details>
+      </li>
+      <li>
+        <details>
+          <summary>Try going back a page</summary>
+          <p>There's a litte left-pointing arrow in the top left, give it a click.</p>
+        </details>
+      </li>
+      <li>
+        <details>
+          <summary>Try going to the <a href="/">home page</a>.</summary>
+          <p>
+            It could be the state of the app at this page is broken, going home will reset this.
+          </p>
+        </details>
+      </li>
+      <li>
+        <details>
+          <summary>
+            Send this error report in an
+            <a
+              id="email-link"
+              href="mailto:willster+wjminis@willsterjohnson.com"
+              >email</a
+            >.
+          </summary>
+          <p>
+            Clicking the link above should fill out the email automatically, if not here's the
+            template;
+          </p>
+          <div>
+            <p>To: <span id="email-to"></span></p>
+            <p>Subject: <span id="email-subject"></span></p>
+            <p>Body:</p>
+            <span id="email-body"></span>
+          </div>
+        </details>
+      </li>
+    </ol>
+    <script>
+      window.addEventListener("load", () => {
+        const status = document.getElementById("data-status").innerText;
+        const message = document.getElementById("data-message").innerText;
+        const emailLink = document.getElementById("email-link");
+        const emailTo = document.getElementById("email-to");
+        const emailSubject = document.getElementById("email-subject");
+        const emailBody = document.getElementById("email-body");
+
+        const generatedSubject = `Error report for ${window.location.hostname} ${status} ${message}`;
+
+        const generatedBody = [
+          `To the Webmaster,`,
+          "",
+          `At ${new Date().toLocaleString()}, the following error occured:`,
+          "",
+          `Domain: ${window.location.hostname}`,
+          `Path: ${window.location.pathname}`,
+          `Status: ${status}`,
+          `Message: ${message}`,
+          "",
+          "I confirm that refreshing, going back a page, and going to the home page did not resolve the issue.",
+          "",
+          "[ENTER ADDITIONAL INFORMATION HERE]",
+          "",
+          "Get it fixed!",
+          "Many thanks,",
+          "A user",
+        ].join("
+");
+
+        const recipient = "willster+wjminis@willsterjohnson.com";
+
+        emailLink.href = `mailto:${recipient}?subject=${encodeURIComponent(
+          generatedSubject
+        )}&body=${encodeURIComponent(generatedBody)}`;
+        emailTo.innerText = recipient;
+        emailSubject.innerText = generatedSubject;
+        emailBody.innerText = generatedBody;
+      });
+    </script>
+  </body>
+</html>
