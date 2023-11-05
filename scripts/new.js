@@ -10,10 +10,11 @@ import { changelogHead, clear, cwd, dim, input, red, sh, yellow } from "./funcs.
  * @param {string} message
  */
 async function commit(targets, message) {
-  const answer = await input(`Commit? ${dim("[y/N]")}${clear} `);
+  const answer = await input(`Commit the new & changed files? ${dim("[y/N]")}${clear} `);
   if (answer.toLowerCase() === "y") {
+    sh("git reset");
     for (const file in targets) sh(`git add ${file}`);
-    sh(`git diff-index --quiet HEAD || ` + `git commit -m "${message}"`);
+    sh(`git diff-index --quiet HEAD || git commit -m "${message}"`);
   }
 }
 
@@ -35,7 +36,6 @@ function writeAll(map, target, targetPath) {
 function shield(alt, endpoint, logo) {
   return `![${alt}](https://img.shields.io/${endpoint}?color=444&label=&logo=${logo})`;
   // https://img.shields.io/endpoint?url=https%3A%2F%2Fwjminis.dev
-
 }
 
 /**
@@ -620,10 +620,6 @@ async function app() {
 
 const kind = process.argv[2];
 
-sh("git add . && git stash");
-
 if (kind === "package") pkg();
 else if (kind === "app") app();
 else console.log(`Error: unknown kind: ${kind} - expected \`package\` or \`app\``);
-
-sh("git stash pop");

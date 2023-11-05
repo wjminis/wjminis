@@ -7,9 +7,16 @@ export const cwd = path.join(__dirname, "..");
 
 /**
  * @param {string} cmd
+ * @param {boolean} safe
  */
-export function sh(cmd) {
-  return child.execSync(cmd, { cwd, stdio: ["pipe", "pipe", "ignore"], encoding: "utf-8" }).trim();
+export function sh(cmd, safe = false) {
+  return child
+    .execSync(cmd + (safe ? " || exit 0" : ""), {
+      cwd,
+      stdio: ["pipe", "pipe", "ignore"],
+      encoding: "utf-8",
+    })
+    .trim();
 }
 
 /**
