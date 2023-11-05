@@ -522,7 +522,8 @@ async function app() {
           type: "module",
           private: true,
           scripts: {
-            prepare: "svelte-kit sync",
+            prepare: "pnpm run sync",
+            sync: "../__BUILDSPACE__/run-script sync",
             dev: "../__BUILDSPACE__/run-script dev",
             build: "../__BUILDSPACE__/run-script build",
             preview: "../__BUILDSPACE__/run-script preview",

@@ -2,6 +2,7 @@
   "name": "unified_svelte_buildspace",
   "private": true,
   "scripts": {
+    "_sync": "svelte-kit sync",
     "_dev": "vite dev",
     "_build": "vite build",
     "_preview": "vite preview",
