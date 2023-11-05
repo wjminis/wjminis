@@ -433,7 +433,7 @@ async function app() {
       ].join("\n"),
     "index.html": () =>
       [
-        "<!doctype html>",
+        "<!DOCTYPE html>",
         '<html lang="en">',
         "  <head>",
         '    <meta charset="utf-8" />',
@@ -445,10 +445,10 @@ async function app() {
         '      name="viewport"',
         '      content="width=device-width, initial-scale=1"',
         "    />",
-        "      <link",
-        '        rel="stylesheet"',
-        '        href="%sveltekit.assets%/global.css"',
-        "      />",
+        "    <link",
+        '      rel="stylesheet"',
+        '      href="%sveltekit.assets%/universal.css"',
+        "    />",
         "    %sveltekit.head%",
         "  </head>",
         '  <body data-sveltekit-preload-data="hover">',
