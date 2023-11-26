@@ -1,0 +1,33 @@
+{
+  "name": "@wjminis/ui.keybinds",
+  "version": "0.1.0",
+  "type": "module",
+  "license": "GPL-3.0",
+  "description": "",
+  "keywords": [
+    "wjminis",
+    "ui.keybinds",
+    "ui",
+    "keybinds"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "lint": "prettier --check \"src/**/*.ts\""
+  },
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "devDependencies": {
+    "prettier": "latest",
+    "typescript": "latest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wjminis/wjminis.git"
+  },
+  "homepage": "https://github.com/wjminis/wjminis",
+  "bugs": {
+    "url": "https://github.com/wjminis/wjminis/issues",
+    "email": "willster+wjminis@willsterjohnson.com"
+  }
+}
